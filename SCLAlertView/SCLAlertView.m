@@ -34,7 +34,6 @@
 @property (strong, nonatomic) UIImageView *circleIconImageView;
 @property (strong, nonatomic) UIView *circleView;
 @property (strong, nonatomic) UIView *circleViewBackground;
-@property (strong, nonatomic) UIView *contentView;
 @property (strong, nonatomic) UIImageView *backgroundView;
 @property (strong, nonatomic) UITapGestureRecognizer *gestureRecognizer;
 @property (strong, nonatomic) NSString *titleFontFamily;
@@ -172,6 +171,7 @@ SCLTimerDisplay *buttonTimer;
     self.showAnimationType = SCLAlertViewShowAnimationSlideInFromTop;
     self.backgroundType = SCLAlertViewBackgroundShadow;
     self.tintTopCircle = YES;
+    self.autoDismiss = YES;
     
     // Font
     _titleFontFamily = @"HelveticaNeue";
@@ -763,7 +763,7 @@ SCLTimerDisplay *buttonTimer;
         NSLog(@"Unknown action type for button");
     }
     
-    if([self isVisible])
+    if([self isVisible] && self.autoDismiss)
     {
         [self hideView];
     }

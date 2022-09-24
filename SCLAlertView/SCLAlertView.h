@@ -103,6 +103,13 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  */
 @property (assign, nonatomic) BOOL useLargerIcon;
     
+/**
+ *  Auto dismiss alert when button tapped
+ *
+ * (Default: YES)
+ */
+@property (assign, nonatomic) BOOL autoDismiss;
+
 /** Title Label
  *
  * The text displayed as title.
@@ -114,6 +121,11 @@ typedef NS_ENUM(NSInteger, SCLAlertViewBackground)
  * Holds the textview.
  */
 @property (strong, nonatomic) UITextView *viewText;
+
+/**
+ *   CustomView
+ */
+@property (strong, nonatomic) UIView *contentView;
 
 /** Activity Indicator
  *
