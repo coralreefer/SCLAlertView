@@ -308,7 +308,9 @@ SCLTimerDisplay *buttonTimer;
     CGRect r;
     if (self.view.superview != nil) {
         // View is showing, position at center of screen
-        r = CGRectMake((sz.width-_windowWidth)/2, (sz.height-_windowHeight)/2, _windowWidth, _windowHeight);
+        CGFloat originY = (sz.height-_windowHeight)/2;
+        if (self.keyboardIsVisible) originY -= KEYBOARD_HEIGHT + PREDICTION_BAR_HEIGHT;
+        r = CGRectMake((sz.width-_windowWidth)/2, originY, _windowWidth, _windowHeight);
     } else {
         // View is not visible, position outside screen bounds
         r = CGRectMake((sz.width-_windowWidth)/2, -_windowHeight, _windowWidth, _windowHeight);
@@ -351,14 +353,20 @@ SCLTimerDisplay *buttonTimer;
     
     // Buttons
     CGFloat x = 12.0f;
-    for (SCLButton *btn in _buttons) {
-        btn.frame = CGRectMake(x, y, btn.frame.size.width, btn.frame.size.height);
-        
-        // Add horizontal or vertical offset acording on _horizontalButtons parameter
-        if (_horizontalButtons) {
-            x += btn.frame.size.width + 10.0f;
-        } else {
-            y += btn.frame.size.height + 10.0f;
+    if (!_horizontalButtons && _buttons.count == 1) {
+        // only one btn, center horizontally
+        SCLButton *btn = _buttons.firstObject;
+        btn.frame = CGRectMake((_windowWidth - btn.frame.size.width)/2, y, btn.frame.size.width, btn.frame.size.height);
+    } else {
+        for (SCLButton *btn in _buttons) {
+            btn.frame = CGRectMake(x, y, btn.frame.size.width, btn.frame.size.height);
+            
+            // Add horizontal or vertical offset acording on _horizontalButtons parameter
+            if (_horizontalButtons) {
+                x += btn.frame.size.width + 10.0f;
+            } else {
+                y += btn.frame.size.height + 10.0f;
+            }
         }
     }
     
